@@ -10,11 +10,11 @@ from selenium.common.exceptions import TimeoutException
 browser = webdriver.Chrome(executable_path='./chromedriver')
 browser.maximize_window()
 
-timeout = 10
+timeout = 15
 
 #--------------------------------------------------------------------------------------------------#
 
-browser.get('https://pantip.com/topic/37823050')
+browser.get('https://pantip.com/topic/35529340')
 
 try:
     WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.ID, 'last-pageing')))
@@ -33,9 +33,11 @@ for i in range(1, last_page):
     pagination.select_by_value(page)
     print("loading page", page)
     try:
-        WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.ID, 'pageno-title-' + page)))
+        locator = 'comment' + str(i) + '01'
+        WebDriverWait(browser, timeout).until(EC.presence_of_element_located((By.ID, locator)))
     except TimeoutException:
         print('E: get page timeout')
+    browser.implicitly_wait(3)
 
 #--------------------------------------------------------------------------------------------------#
 
@@ -57,10 +59,14 @@ soup = BeautifulSoup(browser.page_source, 'html.parser')
 posts = soup.find_all('div', {'class': 'display-post-wrapper-inner'})
 for post in posts:
     try:
-        comment = post.find('div', {'class': 'display-post-story'}).string
+        comment = post.find('div', {'class': 'display-post-story'}).text
     except:
         print('E: get post error', post)
+
     comment_id = post.find('span', {'class': 'display-post-number'})
     if comment_id:
         comment_id = comment_id['id']
+    else:
+        continue
+
     print(comment_id, comment)

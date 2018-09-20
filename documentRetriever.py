@@ -9,11 +9,20 @@ from selenium.common.exceptions import TimeoutException
 
 import os
 
+resume = input('Resume ?')
+if resume != 'n':
+    start = input('Where to start ?')
+    start = int(start)
+else:
+    start = 1
+
+os.makedirs(os.path.dirname('./errors.log'), exist_ok=True)
 browser = webdriver.Chrome(executable_path='./chromedriver')
 timeout = 15
 
 with open('posts.csv') as post_list:
-    for num, line in enumerate(post_list, 1):
+    lst = post_list.readlines()
+    for num, line in enumerate(lst[start - 1:], start):
         #--------------------------------------OpenPost--------------------------------------------#
 
         url = line.split(' ')[0]
@@ -24,6 +33,9 @@ with open('posts.csv') as post_list:
             WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.ID, 'last-pageing')))
         except TimeoutException:
             print('E: get page timeout')
+            with open('errors.log', 'a') as log_file:
+                log_file.write('E: get page timeout ' + url)
+            continue
 
         soup = BeautifulSoup(browser.page_source, 'html.parser')
 
@@ -41,6 +53,9 @@ with open('posts.csv') as post_list:
                 WebDriverWait(browser, timeout).until(EC.presence_of_element_located((By.ID, locator)))
             except TimeoutException:
                 print('E: get page timeout')
+                with open('errors.log', 'a') as log_file:
+                    log_file.write('E: get page timeout ' + url)
+                continue
             browser.implicitly_wait(3)
 
         #---------------------------------------OpenReplies----------------------------------------#
@@ -91,5 +106,8 @@ with open('posts.csv') as post_list:
                     comment = comment.lstrip().rstrip()
                 except:
                     print('E: get post error', post)
+                    with open('errors.log', 'a') as log_file:
+                        log_file.write('E: get post error ' + url)
+                    continue
 
                 f.write(comment_id + ':' + comment + '\n')

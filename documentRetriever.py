@@ -13,7 +13,7 @@ timeout = 15
 
 #--------------------------------------------------------------------------------------------------#
 
-browser.get('https://pantip.com/topic/35659406')
+browser.get('https://pantip.com/topic/36544168')
 
 try:
     WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.ID, 'last-pageing')))
@@ -56,30 +56,32 @@ while len(sub_replies) > 0:
 
 soup = BeautifulSoup(browser.page_source, 'html.parser')
 
-main_post = soup.find('div', {'class': 'main-post-inner'})
-title = main_post.find(class_='display-post-title').text
-comment = main_post.find('div', {'class': 'display-post-story'}).text
-comment = comment.lstrip().rstrip()
-print(title)
-print(comment)
+with open('data.txt', 'w') as f:
+    main_post = soup.find('div', {'class': 'main-post-inner'})
+    title = main_post.find(class_='display-post-title').text
+    comment = main_post.find('div', {'class': 'display-post-story'}).text
+    comment = comment.lstrip().rstrip()
 
-posts = soup.find_all('div', {'class': 'display-post-wrapper-inner'})
-for post in posts:
-    comment_id = post.find('span', {'class': 'display-post-number'})
-    if comment_id:
-        comment_id = comment_id['id']
-        if not comment_id.startswith('comment'):
+    f.write('title:' + title + '\n')
+    f.write('comment:' + comment + '\n')
+
+    posts = soup.find_all('div', {'class': 'display-post-wrapper-inner'})
+    for post in posts:
+        comment_id = post.find('span', {'class': 'display-post-number'})
+        if comment_id:
+            comment_id = comment_id['id']
+            if not comment_id.startswith('comment'):
+                continue
+        else:
             continue
-    else:
-        continue
 
-    try:
-        comment = post.find('div', {'class': 'display-post-story'}).text
-        i = comment.find("แก้ไขข้อความเมื่อ")
-        if i != -1:
-            comment = comment[:i]
-        comment = comment.lstrip().rstrip()
-    except:
-        print('E: get post error', post)
+        try:
+            comment = post.find('div', {'class': 'display-post-story'}).text
+            i = comment.find("แก้ไขข้อความเมื่อ")
+            if i != -1:
+                comment = comment[:i]
+            comment = comment.lstrip().rstrip()
+        except:
+            print('E: get post error', post)
 
-    print(comment_id, comment)
+        f.write(comment_id + ':' + comment + '\n')

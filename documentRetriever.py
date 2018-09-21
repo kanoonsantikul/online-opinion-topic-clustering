@@ -34,7 +34,7 @@ with open('posts.csv') as post_list:
         except TimeoutException:
             print('E: get page timeout')
             with open('errors.log', 'a') as log_file:
-                log_file.write('E: get page timeout ' + url)
+                log_file.write('E: get page timeout ' + url + '\n')
             continue
 
         soup = BeautifulSoup(browser.page_source, 'html.parser')
@@ -54,7 +54,7 @@ with open('posts.csv') as post_list:
             except TimeoutException:
                 print('E: get page timeout')
                 with open('errors.log', 'a') as log_file:
-                    log_file.write('E: get page timeout ' + url)
+                    log_file.write('E: get page timeout ' + url + '\n')
                 continue
             browser.implicitly_wait(3)
 
@@ -107,7 +107,7 @@ with open('posts.csv') as post_list:
                 except:
                     print('E: get post error', post)
                     with open('errors.log', 'a') as log_file:
-                        log_file.write('E: get post error ' + url)
+                        log_file.write('E: get post error ' + url + '\n')
                     continue
 
                 f.write(comment_id + ':' + comment + '\n')

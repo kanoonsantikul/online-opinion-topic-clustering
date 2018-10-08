@@ -8,7 +8,6 @@ import re
 def clean(doc):
     while True:
         new_doc = re.sub('[^\u0E00-\u0E7F]+', '', doc)
-
         if doc == new_doc:
             break
         else:
@@ -39,8 +38,9 @@ for num in range(len(comments)):
     comments[num] = clean(comments[num])
     comments[num] = word_tokenize(comments[num], engine='newmm')
 
-# dictionary = corpora.Dictionary(comments)
-# doc_term_matrix = [dictionary.doc2bow(doc) for doc in comments]
+dictionary = corpora.Dictionary(comments)
+corpus = [dictionary.doc2bow(doc) for doc in comments]
 
-for num, comment in enumerate(comments):
-    print(num, comment)
+Lda = gensim.models.ldamodel.LdaModel
+ldamodel = Lda(corpus, num_topics=5, id2word=dictionary, passes=50)
+print(ldamodel.print_topics(num_topics=5, num_words=3))

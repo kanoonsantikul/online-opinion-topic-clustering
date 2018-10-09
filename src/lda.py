@@ -15,32 +15,39 @@ def clean(doc):
 
     return doc
 
-comments = []
 
-with open('../data/70-79/marked/31590391.txt') as f:
-    start = False
-    num = -2
+def get_tokenized_data(file_directory):
+    comments = []
 
-    for line in f:
-        if line.startswith('comment'):
-            num += 1
-            if num < 0:
-                continue
+    with open(file_directory) as f:
+        start = False
+        num = -2
 
-            comment = ''.join(x for x in line.split(':')[2:])
-            comments.insert(num, comment)
-            start = True
+        for line in f:
+            if line.startswith('comment'):
+                num += 1
+                if num < 0:
+                    continue
 
-        elif start:
-            comments[num] += line
+                comment = ''.join(x for x in line.split(':')[2:])
+                comments.insert(num, comment)
+                start = True
 
-for num in range(len(comments)):
-    comments[num] = clean(comments[num])
-    comments[num] = word_tokenize(comments[num], engine='newmm')
+            elif start:
+                comments[num] += line
 
+    for num in range(len(comments)):
+        comments[num] = clean(comments[num])
+        comments[num] = word_tokenize(comments[num], engine='newmm')
+
+    return comments
+
+comments = get_tokenized_data('../data/70-79/marked/31629130.txt')
 dictionary = corpora.Dictionary(comments)
 corpus = [dictionary.doc2bow(doc) for doc in comments]
 
-Lda = gensim.models.ldamodel.LdaModel
-ldamodel = Lda(corpus, num_topics=5, id2word=dictionary, passes=50)
-print(ldamodel.print_topics(num_topics=5, num_words=3))
+# Lda = gensim.models.ldamodel.LdaModel
+# ldamodel = Lda(corpus, num_topics=5, id2word=dictionary, passes=50)
+
+for doc in corpus:
+    print(doc)

@@ -15,6 +15,16 @@ def clean(doc):
 
     return doc
 
+def remove_stop_words (corpus, dictionary, threshold):
+    TfidfModel = gensim.models.TfidfModel
+    tfidf = TfidfModel(corpus, dictionary)
+
+    stop_words = []
+    for doc in corpus:
+        stop_words += [id for id, value in tfidf[doc] if value < threshold]
+
+    dictionary.filter_tokens(bad_ids=stop_words)
+    return dictionary
 
 def get_tokenized_data(file_directory):
     comments = []
@@ -43,11 +53,27 @@ def get_tokenized_data(file_directory):
     return comments
 
 comments = get_tokenized_data('../data/70-79/marked/31629130.txt')
+print('Total documents ' + str(len(comments)))
+
 dictionary = corpora.Dictionary(comments)
 corpus = [dictionary.doc2bow(doc) for doc in comments]
 
-# Lda = gensim.models.ldamodel.LdaModel
-# ldamodel = Lda(corpus, num_topics=5, id2word=dictionary, passes=50)
+dictionary = remove_stop_words(corpus, dictionary, 0.1)
+corpus = [dictionary.doc2bow(doc) for doc in comments]
 
-for doc in corpus:
-    print(doc)
+for i, doc in enumerate(corpus):
+    print(str(i) + ': ', end='')
+    for id, value in doc:
+        print('(' + dictionary[id] + ', ' + str(value) + ')', end=' ')
+    print('')
+
+Lda = gensim.models.ldamodel.LdaModel
+ldamodel = Lda(corpus, num_topics=6, id2word=dictionary, passes=50)
+
+print('\nterm-topic-matrix')
+print(ldamodel.get_topics())
+
+
+print('\ntopic term')
+for i in range(6):
+    print(ldamodel.show_topic(i, topn=10))

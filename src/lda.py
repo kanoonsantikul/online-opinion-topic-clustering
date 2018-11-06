@@ -73,7 +73,6 @@ ldamodel = Lda(corpus, num_topics=6, id2word=dictionary, passes=50)
 print('\nterm-topic-matrix')
 print(ldamodel.get_topics())
 
-
 print('\ntopic term')
 for i in range(6):
     print(ldamodel.show_topic(i, topn=10))

@@ -17,7 +17,7 @@ else:
     start = 1
 
 os.makedirs(os.path.dirname('../errors.log'), exist_ok=True)
-browser = webdriver.Chrome(executable_path='./chromedriver')
+browser = webdriver.Chrome(executable_path='../chromedriver')
 timeout = 15
 
 with open('../posts.csv') as post_list:

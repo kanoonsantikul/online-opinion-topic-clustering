@@ -1,4 +1,5 @@
 venv
 errors.log
 data.ods
-
+src/.ipynb_checkpoints
+src/result*

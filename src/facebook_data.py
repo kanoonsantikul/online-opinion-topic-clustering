@@ -14,14 +14,14 @@ def clean(doc):
 
     return doc.strip()
 
-with open('all-cafe.html') as html:
+with open('ผู้บริโภค - Posts.html') as html:
     soup = BeautifulSoup(html, 'html.parser')
 
 comment_container = soup.find('div', {'class': 'fbPhotosSnowliftFeedback'})
 comment_container = comment_container.find('div', {'class': 'UFIList'})
 comments = comment_container.find_all('div', {'class': 'UFICommentActorAndBodySpacing'})
 
-file_name = './all-cafe.txt'
+file_name = './new_file.txt'
 os.makedirs(os.path.dirname(file_name), exist_ok=True)
 
 with open(file_name, 'w') as f:

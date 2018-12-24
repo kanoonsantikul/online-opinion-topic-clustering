@@ -39,7 +39,7 @@ def clean(doc):
 	return doc
 
 def main():
-	file_name = 'ผู้บริโภค - TescoLotus.txt'
+	file_name = 'ผู้บริโภค - TrueCoffee.txt'
 	corpus = load_corpus('../data/facebook/' + file_name)[0]
 	print('Total documents', len(corpus))
 

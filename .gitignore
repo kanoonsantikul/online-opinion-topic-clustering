@@ -1,5 +1,8 @@
 venv
+
+src/.ipynb_checkpoints
+src/__pycache__
+
 errors.log
 data.ods
-src/.ipynb_checkpoints
 src/result*

@@ -4,11 +4,11 @@ from pythainlp.tokenize import word_tokenize
 def load_corpus(file_directory):
 	corpus = []
 	labels = []
-	    
+
 	f = open(file_directory, 'r')
 	data = f.read().splitlines()
 	f.close()
-    
+
 	start = False
 	num = -2
 
@@ -25,7 +25,7 @@ def load_corpus(file_directory):
 
 		elif start:
 			corpus[num] += line
-	
+
 	return corpus, labels
 
 def clean(doc):
@@ -39,7 +39,7 @@ def clean(doc):
 	return doc
 
 def main():
-	file_name = 'ผู้บริโภค - TrueCoffee.txt'
+	file_name = 'CatDump - หมี่หยก.txt'
 	corpus = load_corpus('../data/facebook/' + file_name)[0]
 	print('Total documents', len(corpus))
 
@@ -54,6 +54,6 @@ def main():
 				f.write('\'' + word + '\',')
 			f.write('],')
 		f.write(']')
-		
+
 if __name__== "__main__":
   main()

@@ -39,7 +39,7 @@ def clean(doc):
 	return doc
 
 def main():
-	file_name = 'CatDump - หมี่หยก.txt'
+	file_name = 'จบข่าว - ใบขับขี่.txt'
 	corpus = load_corpus('../data/facebook/' + file_name)[0]
 	print('Total documents', len(corpus))
 

@@ -14,12 +14,10 @@ def clean(doc):
 
     return doc.strip()
 
-with open('CatDumb - หมี่หยก.html') as html:
+with open('จบข่าว - ใบขับขี่.html') as html:
     soup = BeautifulSoup(html, 'html.parser')
 
-comment_container = soup.find('div', {'class': 'fbPhotosSnowliftFeedback'})
-if not comment_container:
-    comment_container = soup.find('div', {'class': 'permalinkPost'})
+comment_container = soup.find('div', {'class': 'permalinkPost'})
 comment_container = comment_container.find('div', {'class': 'UFIList'})
 comments = comment_container.find_all('div', {'class': 'UFICommentActorAndBodySpacing'})
 

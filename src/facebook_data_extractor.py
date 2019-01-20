@@ -1,47 +1,44 @@
 from bs4 import BeautifulSoup
 from bs4.element import NavigableString
 
-import os
 import re
+import sys
 
-def clean(doc):
-    while True:
-        new_doc = re.sub('[^" "0-9\u0E00-\u0E7F]+', '', doc)
-        if doc == new_doc:
-            break
-        else:
-            doc = new_doc
+def main():
+	file_name = sys.argv[1]
+	if not file_name:
+		return
 
-    return doc.strip()
+	with open(file_name) as html:
+		soup = BeautifulSoup(html, 'html.parser')
 
-with open('จบข่าว - ใบขับขี่.html') as html:
-    soup = BeautifulSoup(html, 'html.parser')
+	comment_container = soup.find('div', {'class': 'permalinkPost'})
+	comment_container = comment_container.find('div', {'class': 'UFIList'})
+	comments = comment_container.find_all('div', {'class': 'UFICommentActorAndBodySpacing'})
 
-comment_container = soup.find('div', {'class': 'permalinkPost'})
-comment_container = comment_container.find('div', {'class': 'UFIList'})
-comments = comment_container.find_all('div', {'class': 'UFICommentActorAndBodySpacing'})
+	skip = 0
+	file_name = file_name.replace('html', 'txt')
+	with open('../data/facebook/' + file_name, 'w') as f:
+		f.write('comment::\n')
+		row = 0
+		for comment in comments:
+		    if comment.find('a', {'class': 'profileLink'}):
+		        skip += 1
+		        continue
 
-file_name = './new_file.txt'
-os.makedirs(os.path.dirname(file_name), exist_ok=True)
+		    comment = comment.find('span', {'class': 'UFICommentBody'})
+		    comment_children = comment.descendants
+		    comment = ''
+		    for child in comment_children:
+		    	if isinstance(child, NavigableString):
+		    		comment += child
 
-skip = 0
-with open(file_name, 'w') as f:
-    f.write('comment::\n')
-
-    for i, comment in enumerate(comments):
-        if comment.find('a', {'class': 'profileLink'}):
-            skip += 1
-            continue
-
-        comment = comment.find('span', {'class': 'UFICommentBody'})
-        comment_children = comment.descendants
-        comment = ''
-        for child in comment_children:
-        	if isinstance(child, NavigableString):
-        		comment += child
-
-        comment = clean(str(comment))
-        if comment == '' or comment.isdigit():
-            continue
-        f.write('comment' + str(i) + '::' + comment + '\n')
-print('Skip ' + str(skip) + ' comments.')
+		    comment = comment.strip()
+		    if comment == '' or comment.isdigit():
+		        continue
+		    f.write('comment' + str(row) + '::' + comment + '\n')
+		    row += 1
+	print('Skip ' + str(skip) + ' comments.')
+	
+if __name__ == "__main__":
+  main()

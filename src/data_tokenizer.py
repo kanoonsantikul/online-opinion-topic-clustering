@@ -1,4 +1,6 @@
+import sys
 import re
+
 from pythainlp.tokenize import word_tokenize
 
 def load_corpus(file_directory):
@@ -29,17 +31,20 @@ def load_corpus(file_directory):
 	return corpus, labels
 
 def clean(doc):
-	doc.strip()
 	while True:
 		new_doc = re.sub('[^" "\u0E00-\u0E7F]+', '', doc)
 		if doc == new_doc:
 			break
 		else:
 			doc = new_doc
+	doc = doc.strip()
 	return doc
 
 def main():
-	file_name = 'จบข่าว - ใบขับขี่.txt'
+	file_name = sys.argv[1]
+	if not file_name:
+		return
+
 	corpus = load_corpus('../data/facebook/' + file_name)[0]
 	print('Total documents', len(corpus))
 
@@ -55,5 +60,5 @@ def main():
 			f.write('],')
 		f.write(']')
 
-if __name__== "__main__":
+if __name__ == "__main__":
   main()

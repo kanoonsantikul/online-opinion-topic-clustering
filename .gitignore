@@ -2,6 +2,7 @@ venv
 
 src/.ipynb_checkpoints
 __pycache__
+.temp
 
 errors.log
 data.ods

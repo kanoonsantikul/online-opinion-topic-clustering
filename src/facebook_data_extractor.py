@@ -18,7 +18,7 @@ def main():
 
 	skip = 0
 	file_name = file_name.replace('html', 'txt')
-	with open('../data/facebook/' + file_name, 'w') as f:
+	with open('../data/' + file_name, 'w') as f:
 		f.write('comment::\n')
 		row = 0
 		for comment in comments:

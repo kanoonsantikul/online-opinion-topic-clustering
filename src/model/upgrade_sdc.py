@@ -7,7 +7,7 @@ class UpgradeSDC:
 	def predict(self, onehot_corpus, min_samples, eps):
 		delta_eps = eps / 20
 		labels = [-1 for i in range(len(onehot_corpus))]
-		initials = [[],[]]
+		initials = [-1 for i in range(len(onehot_corpus))]
 
 		clusters = []
 		clusters.append([])
@@ -26,9 +26,9 @@ class UpgradeSDC:
 					clusters[cluster_num].append(numpy.array(onehot_corpus.iloc[p]))
 
 					if p == seed:
-						initials[0].append(p)
+						initials[p] = 0
 					else:
-						initials[1].append(p)
+						initials[p] = 1
 				points = [i for i in points if i not in eps_neighbors]
 			else:
 			    labels[seed] = 0

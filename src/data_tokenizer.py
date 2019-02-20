@@ -45,10 +45,10 @@ def main():
 	if not file_name:
 		return
 
-	corpus = load_corpus('../data/facebook/' + file_name)[0]
+	corpus = load_corpus('../data/' + file_name)[0]
 	print('Total documents', len(corpus))
 
-	with open('../data/facebook/tokenized/tokenized_' + file_name, 'w') as f:
+	with open('../data/tokenized/tokenized_' + file_name, 'w') as f:
 		f.write('[')
 		for doc in corpus:
 			cleaned_doc = clean(doc)

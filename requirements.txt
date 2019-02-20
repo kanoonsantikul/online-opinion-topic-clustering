@@ -8,6 +8,6 @@ gensim==3.6.0
 pythainlp==1.6.0.7
 scikit-learn==0.20.2
 beautifulsoup4==4.7.0
-selenium=3.141.0
+selenium==3.141.0
 deepcut==0.6.1.0
 tensorflow==1.12.0

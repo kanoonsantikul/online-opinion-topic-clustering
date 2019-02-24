@@ -24,7 +24,7 @@ class UpgradeSDC:
 				for p in eps_neighbors:
 					labels[p] = cluster_num
 					clusters[cluster_num].append(numpy.array(onehot_corpus.iloc[p]))
-
+					
 					if p == seed:
 						initials[p] = 0
 					else:

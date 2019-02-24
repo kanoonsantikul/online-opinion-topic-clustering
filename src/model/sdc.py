@@ -5,8 +5,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 class SDC:
     def predict(self, onehot_corpus, min_samples, eps):
-        delta_eps = eps / 10
+        delta_eps = eps / 20
         labels = [-1 for i in range(len(onehot_corpus))]
+        initials = [-1 for i in range(len(onehot_corpus))]
         sims = cosine_similarity(onehot_corpus)
 
         points = [i for i in range(len(onehot_corpus))]
@@ -18,6 +19,11 @@ class SDC:
                 cluster_num += 1
                 for p in eps_neighbors:
                     labels[p] = cluster_num
+
+                    if p == seed:
+                        initials[p] = 0
+                    else:
+                        initials[p] = 1
                 points = [i for i in points if i not in eps_neighbors]
             else:
                 labels[seed] = 0
@@ -43,4 +49,4 @@ class SDC:
 
             cluster_num -= 1
 
-        return labels
+        return labels, initials

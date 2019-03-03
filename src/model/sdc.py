@@ -14,7 +14,7 @@ class SDC:
         cluster_num = 0
         while len(points) > 0:
             seed = random.choice(points)
-            eps_neighbors = [i for i, sim in enumerate(sims[seed]) if sim >= eps and labels[i] == -1]
+            eps_neighbors = [i for i, sim in enumerate(sims[seed]) if sim >= eps and labels[i] <= 0]
             if len(eps_neighbors) >= min_samples:
                 cluster_num += 1
                 for p in eps_neighbors:

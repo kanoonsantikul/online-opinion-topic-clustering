@@ -4,7 +4,7 @@ import random
 from sklearn.metrics.pairwise import cosine_similarity
 
 class UpgradeSDC:
-	def predict(self, onehot_corpus, min_samples, eps):
+	def predict(self, onehot_corpus, min_samples, eps, seeds=None):
 		delta_eps = eps / 20
 		labels = [-1 for i in range(len(onehot_corpus))]
 		initials = [-1 for i in range(len(onehot_corpus))]
@@ -14,26 +14,38 @@ class UpgradeSDC:
 		cluster_num = 0
 
 		points = [i for i in range(len(onehot_corpus))]
-		sims = cosine_similarity(onehot_corpus)
 		while len(points) > 0:
-			seed = random.choice(points)
-			eps_neighbors = [i for i, sim in enumerate(sims[seed]) if sim >= eps and labels[i] <= 0]
+			if seeds == None:
+				seed_num = random.choice(points)
+				seed = numpy.array(onehot_corpus.iloc[seed_num])
+			else:
+				seed_num = -1
+				seed = seeds.pop(0)
+				if len(seeds) == 0:
+					for i, label in enumerate(labels):
+						if label == -1:
+							labels[i] = 0
+							clusters[0].append((i, numpy.array(onehot_corpus.iloc[i])))
+					break
+
+			sims = cosine_similarity(seed.reshape(1, -1), onehot_corpus)
+			eps_neighbors = [i for i, sim in enumerate(sims[0]) if sim >= eps and labels[i] <= 0]
 			if len(eps_neighbors) >= min_samples:
 				cluster_num += 1
 				clusters.append([])
-				for p in eps_neighbors:
-					labels[p] = cluster_num
-					clusters[cluster_num].append(numpy.array(onehot_corpus.iloc[p]))
+				for point in eps_neighbors:
+					labels[point] = cluster_num
+					clusters[cluster_num].append(numpy.array(onehot_corpus.iloc[point]))
 					
-					if p == seed:
-						initials[p] = 0
+					if point == seed_num:
+						initials[point] = 0
 					else:
-						initials[p] = 1
+						initials[point] = 1
 				points = [i for i in points if i not in eps_neighbors]
-			else:
-			    labels[seed] = 0
-			    clusters[0].append((seed, numpy.array(onehot_corpus.iloc[seed])))
-			    points.remove(seed)
+			elif seeds == None:
+			    labels[seed_num] = 0
+			    clusters[0].append((seed_num, seed))
+			    points.remove(seed_num)
 
 		expandable = numpy.zeros(cluster_num + 1)
 		while numpy.sum(expandable) != -cluster_num - 1:

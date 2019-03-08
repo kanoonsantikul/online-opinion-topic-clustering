@@ -3,9 +3,9 @@ import random
 
 from sklearn.metrics.pairwise import cosine_similarity
 
-class UpgradeSDC:
-	def predict(self, onehot_corpus, min_samples, eps, seeds=None):
-		delta_eps = eps / 20
+class NewSDC:
+	def predict(self, onehot_corpus, min_samples, eps, expand_rate, seeds=None):
+		delta_eps = eps * expand_rate
 		labels = [-1 for i in range(len(onehot_corpus))]
 		initials = [-1 for i in range(len(onehot_corpus))]
 
@@ -19,14 +19,14 @@ class UpgradeSDC:
 				seed_num = random.choice(points)
 				seed = numpy.array(onehot_corpus.iloc[seed_num])
 			else:
-				seed_num = -1
-				seed = seeds.pop(0)
 				if len(seeds) == 0:
 					for i, label in enumerate(labels):
 						if label == -1:
 							labels[i] = 0
 							clusters[0].append((i, numpy.array(onehot_corpus.iloc[i])))
 					break
+				seed_num = -1
+				seed = seeds.pop(0)
 
 			sims = cosine_similarity(seed.reshape(1, -1), onehot_corpus)
 			eps_neighbors = [i for i, sim in enumerate(sims[0]) if sim >= eps and labels[i] <= 0]

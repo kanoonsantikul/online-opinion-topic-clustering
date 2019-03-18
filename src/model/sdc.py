@@ -4,8 +4,8 @@ import random
 from sklearn.metrics.pairwise import cosine_similarity
 
 class SDC:
-    def predict(self, onehot_corpus, min_samples, eps):
-        delta_eps = eps / 20
+    def predict(self, onehot_corpus, min_samples, eps, expand_rate):
+        delta_eps = eps * expand_rate
         labels = [-1 for i in range(len(onehot_corpus))]
         initials = [-1 for i in range(len(onehot_corpus))]
         sims = cosine_similarity(onehot_corpus)

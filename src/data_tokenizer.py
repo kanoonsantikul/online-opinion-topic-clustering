@@ -5,7 +5,6 @@ from pythainlp.tokenize import word_tokenize
 
 def load_corpus(file_directory):
 	corpus = []
-	labels = []
 
 	f = open(file_directory, 'r')
 	data = f.read().splitlines()
@@ -22,13 +21,12 @@ def load_corpus(file_directory):
 
 			comment = ''.join(x for x in line.split(':')[2:])
 			corpus.insert(num, comment)
-			labels.insert(num, line.split(':')[1])
 			start = True
 
 		elif start:
 			corpus[num] += line
 
-	return corpus, labels
+	return corpus
 
 def clean(doc):
 	while True:

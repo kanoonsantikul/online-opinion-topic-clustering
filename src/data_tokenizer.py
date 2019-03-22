@@ -10,21 +10,9 @@ def load_corpus(file_directory):
 	data = f.read().splitlines()
 	f.close()
 
-	start = False
-	num = -2
-
-	for line in data:
-		if line.startswith('comment'):
-			num += 1
-			if num < 0:
-				continue
-
-			comment = ''.join(x for x in line.split(':')[2:])
-			corpus.insert(num, comment)
-			start = True
-
-		elif start:
-			corpus[num] += line
+	for line in data[1:]:
+		comment = ''.join(x for x in line.split(':')[2:])
+		corpus.append(comment)
 
 	return corpus
 
@@ -43,7 +31,7 @@ def main():
 	if not file_name:
 		return
 
-	corpus = load_corpus('../data/' + file_name)[0]
+	corpus = load_corpus('../data/' + file_name)
 	print('Total documents', len(corpus))
 
 	with open('../data/tokenized/tokenized_' + file_name, 'w') as f:

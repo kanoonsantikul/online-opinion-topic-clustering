@@ -42,7 +42,8 @@ def main():
 			tokenized_doc = word_tokenize(cleaned_doc, engine='deepcut')
 			f.write('[')
 			for word in tokenized_doc:
-				f.write('\'' + word + '\',')
+				if word != ' ':
+					f.write('\'' + word + '\',')
 			f.write('],')
 		f.write(']')
 

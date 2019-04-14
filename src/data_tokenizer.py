@@ -34,12 +34,12 @@ def main():
 	corpus = load_corpus('../data/' + file_name)
 	print('Total documents', len(corpus))
 
-	with open('../data/tokenized/tokenized_' + file_name, 'w') as f:
+	with open('../data/tokenized/newmm/tokenized_' + file_name, 'w') as f:
 		f.write('[')
 		for doc in corpus:
 			cleaned_doc = clean(doc)
 			print(cleaned_doc)
-			tokenized_doc = word_tokenize(cleaned_doc, engine='deepcut')
+			tokenized_doc = word_tokenize(cleaned_doc, engine='newmm')
 			f.write('[')
 			for word in tokenized_doc:
 				if word != ' ':

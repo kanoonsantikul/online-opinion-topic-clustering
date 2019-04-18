@@ -35,17 +35,14 @@ def main():
 	print('Total documents', len(corpus))
 
 	with open('../data/tokenized/newmm/tokenized_' + file_name, 'w') as f:
-		f.write('[')
+		tokenized_corpus = []
 		for doc in corpus:
 			cleaned_doc = clean(doc)
 			print(cleaned_doc)
 			tokenized_doc = word_tokenize(cleaned_doc, engine='newmm')
-			f.write('[')
-			for word in tokenized_doc:
-				if word != ' ':
-					f.write('\'' + word + '\',')
-			f.write('],')
-		f.write(']')
+			tokenized_doc = [word for word in tokenized_doc if word.strip() != '']
+			tokenized_corpus.append(tokenized_doc)
+		f.write(str(tokenized_corpus))
 
 if __name__ == "__main__":
   main()

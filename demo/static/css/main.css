@@ -1,0 +1,44 @@
+main {
+    padding-left: 170px;
+}
+
+li.active {
+    background-color: #e64a19 !important;
+}
+
+[type="radio"] {
+    border: 2px solid #212121;
+}
+
+[type="radio"].with-gap + span:before {
+    border: 2px solid #424242;
+}
+
+[type="radio"].with-gap:checked + span:before {
+    border: 2px solid #212121;
+}
+
+[type="radio"].with-gap:checked + span:after {
+    border: 2px solid #dd2c00;
+    background-color: #dd2c00;
+}
+
+[type="radio"].with-gap + span {
+    color: #424242;
+    font-weight: bold;
+}
+
+[type="radio"].with-gap:checked + span {
+    color: #292929;
+    font-weight: bold;
+}
+
+.card-panel {
+    border: 1px solid #ef6c00;
+}
+
+.sidenav li > a {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 32px;
+}

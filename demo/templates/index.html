@@ -2,30 +2,112 @@
 <html>
 <head>
     <title>Clustering Demo</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{{ url_for("static", filename="css/materialize.min.css") }}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{{ url_for("static", filename="css/main.css") }}"  media="screen,projection"/>
 </head>
-<body>
-    <div id='dataSelection'>
-        <a value='TrueCoffee'>True Coffee</a>
-        <a value='TescoLotus'>Testco Lotus</a>
-        <a value='แก้ปัญหาฝุ่น'>แก้ปัญหาฝุ่น</a>
+<body class="yellow darken-3">
+    <ul class="sidenav sidenav-fixed grey darken-4">
+        <div class="section"></div>
+        <li><ul id="clusterSelection"></ul></li>
+    </ul>
+    
+    <main class="container">
+        <div class="section"></div>
+
+        <div class="row grey darken-4 grey-text text-lighten-2">
+            <div class="col s12">
+                <ul id="data-list" class="tabs grey darken-4">
+                <li value="TrueCoffee" class="tab col s3"><a href="#true-coffee" class="grey-text text-lighten-1">True Coffee</a></li>
+                <li value="TescoLotus" class="tab col s3"><a href="#tesco-lotus" class="grey-text text-lighten-1">Tesco Lotus</a></li>
+                <li value="แก้ปัญหาฝุ่น" class="tab col s3"><a href="#dust-problem" class="grey-text text-lighten-1">การแก้ปัญหาฝุ่น</a></li>
+                </ul>
+            </div>
+            <div id = "true-coffee" class = "col s12">
+                <div class="card grey darken-3">
+                    <div class="card-content grey-text text-lighten-3">
+                        <p>ผู้บริโภคอยากให้ True Coffee ปรับปรุงเรื่องใดมากที่สุด</p>
+                    </div>
+                    <div class="card-action">
+                        <a value="TrueCoffee" href="#">Use</a>
+                    </div>
+                </div>
+            </div>
+            <div id = "tesco-lotus" class = "col s12">
+                <div class="card grey darken-3">
+                    <div class="card-content grey-text text-lighten-3">
+                        <p>ผู้บริโภคอยากให้ TescoLotus ปรับปรุงเรื่องใดมากที่สุด</p>
+                    </div>
+                    <div class="card-action">
+                        <a value="TescoLotus" href="#">Use</a>
+                    </div>
+                </div>
+            </div>
+            <div id = "dust-problem" class = "col s12">      
+                <div class="card grey darken-3">
+                    <div class="card-content grey-text text-lighten-3">
+                        <p>เช้านี้(22/1/62) สถานการณ์ฝุ่นยังแย่มาก แต่รัฐบาลก็ยังทำได้เพียงการ ‘ขอความร่วมมือจากประชาชน’ แต่ไม่มีมาตรการชัดเจนในการจัดการ โดยเฉพาะสำหรับเด็กก็ยังเห็นไปโรงเรียนกันปกติ เด็กๆแม้จะใส่หน้ากาก แต่วิ่งเล่นกันก็หลุด เด็กน้อยคนที่จะใส่ได้นานๆเพราะรำคาญอึดอัด</p>
+                        <p>ทุกคนดูใจเย็นกันอยู่ อาจเพราะเรามองไม่เห็นมัน แต่อันตรายมันมีอยู่จริง แต่การป้องกันจัดการของแต่ละคนทำได้ไม่เท่ากัน จะบอกว่าขอความร่วมมือไม่ให้ใช้รถ ถ้าคนร่วมมือแค่คนเดียวหรือสองสามคนมันจะมีประโยชน์อะไร ตรงนี้ต้องเป็นมาตรการบังคับชัดเจน ให้เห็นผลระยะสั้นก่อน</p>
+                        <p>ที่หมอลองคิดได้ว่าน่าจะทำทันที และอยากบอกไปทางรัฐบาล นี่เป็นสถานการณ์วิกฤตของประเทศไทย และเรารู้ว่ามันจะเป็นแบบนี้ไปทุกปีๆของช่วงเวลานี้ ถ้าเรารู้ เราก็ต้องทำอะไรให้ชัดเจน ไม่ใช่พอฝุ่นน้อยลงก็ลืมๆกันไป แล้วปีหน้าฝุ่นเยอะก็มาประชุมกันใหม่ กลายเป็นวงจรที่ไม่มีอะไรดีขึ้น ผู้ใหญ่อย่างเราไม่นานก็ลาโลกไปแล้ว แต่เด็กๆมากมายที่ต้องกลายเป็นประชากรที่สมรรถภาพปอดถดถอยก่อนเวลาอันควรเมื่อเติบโตขึ้นไป</p>
+                        <p>-ถ้าเรารู้แล้วว่าสถานการณ์จะเป็นแบบนี้ไปทุกปี รัฐบาลควรเปลี่ยนปิดเทอมเป็นช่วงฤดูหนาว คือช่วงที่ฝุ่นจะมากที่สุด ไม่ต้องไปปิดเทอมตามอาเซี่ยน การปิดเทอมช่วงที่ฝุ่นมาก จะช่วยให้เด็กไม่ต้องออกมาสัมผัสฝุ่น และลดจำนวนรถในถนน และพ่อแม่อาจพาเด็กไปเที่ยวต่างจังหวัดได้ เด็กก็จะมีคุณภาพชีวิตดีขึ้น อย่างน้อยอยู่ในบ้านก็ยังดี</p>
+                        <p>-ซื้อรถเมล์ใหม่ให้หมด โละคันเก่าที่ควันดำทิ้ง อันนี้ทำได้ทันที รถเมล์บางคันหมอเห็นมาตั้งแต่เป็นนักเรียน ตอนนี้ก็ยังวิ่งอยู่ พระเจ้าเหายังอาย</p>
+                        <p>-รัฐบาลเร่งปลูกต้นไม้มากๆได้เลย อันนี้ทำได้ทันที เพราะใบไม้ช่วยดักฝุ่นได้ มีอีกข้อมูลที่น่าสนใจคือ ประเทศสิงค์โปร์ที่เรารู้ว่าปลูกต้นไม้เยอะมาก มีสภาพอากาศ AQI ดีที่สุดในโลกตอนนี้ (อ้างอิงจาก App. AirVisualเมื่อเช้า)</p>
+                        <p>-ออกกฎหมายจำกัดปริมาณการวิ่งของรถในช่วงที่อากาศไม่ดี เช่น ให้รถป้ายทะเบียนคู่วิ่งวันคู่ ป้ายทะเบียนคี่วิ่งแค่วันคี่ ทุกคนทำเหมือนๆกัน ลำบากหน่อยเท่าๆกัน จำนวนรถจะน้อยลง ก็จะเหมือนช่วงปีใหม่ที่สภาพอากาศกทม.ดีเป็นพิเศษ</p>
+                        <p>-ประกาศหยุดเรียนไปเลยตอนที่ฝุ่นมาก หรือห้ามโรงเรียนให้เด็กออกมากลางแจ้ง นี่อะไรยังเห็นมาเข้าแถว ออกกำลังกายตอนเช้าอยู่เลย</p>
+                        <p>คนส่วนใหญ่ไม่ได้มีทางเลือกที่จะช่วยเหลือตัวเองแบบในอุดมคติ รัฐบาลต้องมีมาตรการบังคับใช้จัดการปัญหา เพราะมันเป็นวิกฤตแล้วขณะนี้</p>
+                        <p>อย่าเรื่อยๆเฉื่อยๆ พูดแต่เรื่องวิชาการสวยหรูแต่ไม่กล้าที่จะออกมาตรการชัดเจนมานำสังคม</p>
+                        <p>ที่เขียนมายืดยาว ไม่ได้พูดในฐานะจิตแพทย์เด็ก แต่ในฐานะประชาชนคนไทยคนหนึ่ง</p>
+                    </div>
+                    <div class="card-action">
+                      <a value="แก้ปัญหาฝุ่น" href="#">Use</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider grey lighten-5"></div>
+        <div class="section"></div>
+            <div class="row">
+                <label class="col s3s">
+                    <input name="algorithm" type="radio" class="with-gap" value="iterative_new_sdc"/>
+                    <span>Iterative New SDC</span>
+                </label>
+                <label class="col s3">
+                    <input name="algorithm" type="radio" class="with-gap" value="new_sdc"/>
+                    <span>NewSDC</span>
+                </label>
+                <label class="col s3">
+                    <input name="algorithm" type="radio" class="with-gap" value="sdc"/>
+                    <span>SDC</span>
+                </label>
+                <label class="col s3">
+                    <input name="algorithm" type="radio" class="with-gap" value="k-mean"/>
+                    <span>K-Mean</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="divider grey lighten-5"></div>
+        <div class="section">
+            <div class="row">
+                <div id="comments" class="col s12">
+                
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="fixed-action-btn">
+        <a href='#' class="btn-floating btn-medium grey darken-4">
+            <i class="large material-icons">keyboard_arrow_up</i>
+        </a>
     </div>
-
-    <select id='algorithmSelection'>
-        <option value='iterative_new_sdc'>Iterative New SDC</option>
-        <option value='new_sdc'>New SDC</option>
-        <option value='sdc'>SDC</option>
-        <option value='k-mean'>K-Mean</option>
-    </select>
-
-    <div id='clusterSelection'>
-    </div>
-
-    <table id='comments'>
-    </table>
-
-    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+ 
+    <script type="text/javascript" src="{{ url_for("static", filename="js/main.js") }}"></script>
+    <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>   
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script> 
     <script type="text/javascript">
-        startApp('{{ algorithm }}')
+        startApp("{{ algorithm }}", "{{ dataName }}")
         showData({{ data|tojson }});
     </script>
 </body>

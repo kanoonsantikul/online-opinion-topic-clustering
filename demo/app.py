@@ -28,7 +28,7 @@ def index_render():
     file_name = data + '.csv'
 
     json_string_data = load_data(algorithm, file_name)  
-    return render_template('index.html', data=json_string_data, algorithm=algorithm)
+    return render_template('index.html', data=json_string_data, algorithm=algorithm, dataName=data)
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clustering Demo</title>
+</head>
+<body>
+    <div id='dataSelection'>
+        <a value='TrueCoffee'>True Coffee</a>
+        <a value='TescoLotus'>Testco Lotus</a>
+        <a value='แก้ปัญหาฝุ่น'>แก้ปัญหาฝุ่น</a>
+    </div>
+
+    <select id='algorithmSelection'>
+        <option value='iterative_new_sdc'>Iterative New SDC</option>
+        <option value='new_sdc'>New SDC</option>
+        <option value='sdc'>SDC</option>
+        <option value='k-mean'>K-Mean</option>
+    </select>
+
+    <div id='clusterSelection'>
+    </div>
+
+    <table id='comments'>
+    </table>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script type="text/javascript">
+        startApp('{{ algorithm }}')
+        showData({{ data|tojson }});
+    </script>
+</body>
+</html>

@@ -10,4 +10,4 @@ scikit-learn==0.20.2
 beautifulsoup4==4.7.0
 selenium==3.141.0
 deepcut==0.6.1.0
-tensorflow==1.15.2
+tensorflow==2.5.3
